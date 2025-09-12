@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Balakrishnan.S Portfolio</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+  <style>
+    :root {
+      --primary: #18e1d9;
+      --secondary: #151e26;
+      --glass: rgba(26, 32, 40, 0.95);
+      --card: rgba(32, 38, 46, 0.98);
+      --border: rgba(136, 255, 247, 0.08);
+      --text: #e5f6f5;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #1e3c72 0%, #2a5298 70%, #0f2027 100%);
+      background-attachment: fixed;
+      color: var(--text);
+      min-height: 100vh;
+      margin: 0;
+      transition: background 0.5s, color 0.3s;
+    }
+    body.light {
+      background: linear-gradient(120deg, #ecf3f3, #c9e4ec 100%);
+      color: #151e26;
+    }
+    .topnav-bar {
+      width: 100%;
+      background: var(--glass);
+      border-bottom: 1.7px solid var(--border);
+      box-shadow: 0 4px 32px 0 #14151522;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 500;
+      padding: 0.6rem 0 0.2rem 0;
+    }
+    .nav-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 950px;
+      margin: 0 auto;
+    }
+    /* Hamburger Styles */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 39px;
+      height: 39px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1301; /* above nav-links */
+    }
+    .hamburger span {
+      display: block;
+      width: 28px;
+      height: 3.7px;
+      background: var(--primary);
+      margin: 4px 0;
+      border-radius: 2.5px;
+      transition: 0.35s;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+    /* Responsive Nav */
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0.2rem;
+      margin-top: 0.2rem;
+      transition: right 0.31s, opacity 0.21s;
+    }
+    @media (max-width: 700px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -320px;
+        height: 100vh;
+        background: var(--glass);
+        flex-direction: column;
+        box-shadow: -1px 0 14px #18e1d938;
+        gap: 1.7rem;
+        padding: 5.4rem 52px 1.7rem 52px;
+        margin: 0;
+        width: 222px;
+        border-radius: 23px 0 0 23px;
+        opacity: 0.98;
+        z-index: 1300;
+      }
+      .nav-links.open {
+        right: 0;
+      }
+      .hamburger {
+        display: flex;
+        position: absolute;
+        top: 38px;
+        right: 32px;
+      }
+    }
+    .nav-links a, .nav-links .instagram-link {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.07rem;
+      letter-spacing: 0.3px;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: color 0.18s;
+      padding: 0.3rem 0rem;
+      display: flex;
+      align-items: center;
+      gap: 0.28rem;
+      border-radius: 4px;
+      position: relative;
+    }
+    .nav-links a.active,
+    .nav-links a:hover {
+      color: #13b9bb;
+    }
+    .nav-links a.active::after,
+    .nav-links a:hover::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--primary);
+      opacity: 0.75;
+    }
+    .instagram-icon {
+      width: 18px; height: 18px;
+      fill: var(--primary);
+      transition: fill 0.22s;
+      vertical-align: middle;
+      margin-top: -2px;
+    }
+    .instagram-link:hover .instagram-icon {
+      fill: #13b9bb;
+    }
+    .profile-img-top {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid var(--primary);
+      background: #23272e;
+      margin-bottom: 0;
+      box-shadow: 0 2px 18px #18e1d944;
+      display: block;
+      margin-top: 0.4rem;
+    }
+    .profile-name-top {
+      font-size: 1.32rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.2rem;
+      letter-spacing: 1px;
+      color: var(--primary);
+    }
+    #dark-toggle {
+      margin: 0.7rem 0 0.6rem 0;
+      padding: 0.5rem 1.4rem;
+      background: var(--secondary);
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+      border-radius: 17px;
+      font-size: 1rem;
+      cursor: pointer;
+      outline: none;
+      transition: background 0.22s, color 0.22s;
+    }
+    #dark-toggle:hover {
+      background: var(--primary);
+      color: #141d1f;
+      border-color: #13b9bb;
+    }
+    main {
+      max-width: 830px;
+      margin: 10.5rem auto 2.5rem;
+      padding: 0 1rem;
+      width: 100%;
+    }
+    .hero-card {
+      background: var(--glass);
+      border-radius: 13px;
+      box-shadow: 0 7px 40px #18e1d933;
+      text-align: center;
+      margin-bottom: 1.25rem;
+      padding: 2.6rem 1.2rem 2rem 1.2rem;
+    }
+    .hero-card h1 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 0.7rem;
+    }
+    .see-work-btn {
+      margin-top: 1.2rem;
+      background: var(--primary);
+      color: #121212;
+      font-weight: 700;
+      padding: 0.58rem 2rem;
+      border-radius: 2rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1.05rem;
+      transition: background 0.18s, color 0.22s, box-shadow 0.19s;
+      box-shadow: 0 0 14px #18e1d977;
+      letter-spacing: 0.7px;
+    }
+    .see-work-btn:hover {
+      background: #13b9bb;
+      color: #fff;
+      box-shadow: 0 0 25px #13b9bb99;
+    }
+    section {
+      background: var(--card);
+      border-radius: 13px;
+      padding: 1.7rem 2rem 1.3rem 2rem;
+      margin-bottom: 1.3rem;
+      box-shadow: 0 2px 18px 0 #0a242249;
+      border: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    h2 {
+      margin: 0 0 1rem 0;
+      color: var(--primary);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+      gap: 1.1rem;
+    }
+    .project-card {
+      background: var(--glass);
+      border-radius: 10px;
+      box-shadow: 0 2px 11px #2befff28;
+      padding: 1.2rem 1rem 1rem 1rem;
+      transition: transform 0.29s, box-shadow 0.29s;
+      margin-bottom: 0.18rem;
+    }
+    .project-card:hover {
+      transform: translateY(-7px) scale(1.03);
+      box-shadow: 0 10px 28px #18e1d987;
+    }
+    .project-img {
+      width: 100%;
+      height: 60px;
+      border-radius: 5px;
+      object-fit: cover;
+      margin-bottom: 0.45rem;
+      background-color: #212e34;
+    }
+    .project-info h3 {
+      color: var(--primary);
+      font-size: 1.07rem;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+      letter-spacing: 0.2px;
+    }
+    .project-info p {
+      color: #baf1ef;
+      font-size: 0.98rem;
+      margin-bottom: 0.2rem;
+      line-height: 1.33;
+    }
+    .project-link {
+      margin-top: 4px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: underline;
+      transition: color 0.2s;
+      display: inline-block;
+      font-size: 0.98rem;
+    }
+    .project-link:hover {
+      color: #13b9bb;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin-top: 1rem;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.78rem 1rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      background: #24292c;
+      color: var(--text);
+      transition: outline 0.22s;
+      resize: none;
+    }
+    body.light input, body.light textarea {
+      background: #eaf4f4;
+      color: #151d1d;
+    }
+    input:focus, textarea:focus {
+      outline: 2px solid var(--primary);
+    }
+    button.submit-btn {
+      background: linear-gradient(135deg, #00fff7, #04b2d9);
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.07rem;
+      font-weight: 700;
+      color: #121212;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: box-shadow 0.3s, background 0.21s;
+      user-select: none;
+      box-shadow: 0 0 10px #00fff7;
+      margin-top: 0.2rem;
+    }
+    button.submit-btn:disabled {
+      background: #444;
+      color: #999;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    button.submit-btn:hover:not(:disabled) {
+      background: #00b0c7;
+      color: #fff;
+      box-shadow: 0 0 22px #00b0c7dd;
+    }
+    /* --- Click to Top Button Styles --- */
+    #to-top-btn {
+      position: fixed;
+      right: 1.4rem;
+      bottom: 1.5rem;
+      z-index: 999;
+      background: var(--primary);
+      color: #18304c;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 2rem;
+      box-shadow: 0 2px 22px #18e1d977;
+      cursor: pointer;
+      display: none;
+      transition: background 0.18s, color 0.22s, box-shadow 0.19s, opacity 0.39s;
+      opacity: 0.98;
+    }
+    #to-top-btn:hover {
+      background: #13b9bb;
+      color: #fff;
+      box-shadow: 0 0 18px #13b9bb88;
+    }
+    body.light #to-top-btn {
+      color: #fff;
+      background: #151e26;
+    }
+    @media (max-width: 680px) {
+      main { padding: 0; }
+      section, .hero-card { padding: 1.1rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .profile-img-top { margin-top: 0.5rem; }
+    }
+    @media screen and (max-width: 600px) {
+      #to-top-btn {
+        right: 1rem;
+        bottom: 1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1.55rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="topnav-bar">
+  <div class="nav-inner">
+    <img src="https://art.pixilart.com/sr2a8259e32b017.png" alt="Profile" class="profile-img-top" />
+    <div class="profile-name-top">Balakrishnan.S</div>
+    <!-- Hamburger icon for mobile -->
+    <button class="hamburger" id="menu-toggle" aria-label="Open Navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="nav-menu">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Work</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.instagram.com/_its__me___bala____17_/?hl=en#" target="_blank" rel="noopener" class="instagram-link" aria-label="Instagram">
+        <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M7.75 2h8.5a5.75 5.75 0 015.75 5.75v8.5a5.75 5.75 0 01-5.75 5.75h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zm8.25 2a1 1 0 110 2 1 1 0 010-2zm-4.25 1a4.75 4.75 0 110 9.5 4.75 4.75 0 010-9.5zm0 1.5a3.25 3.25 0 100 6.5 3.25 3.25 0 000-6.5z"/>
+        </svg>
+        Instagram
+      </a>
+    </div>
+    <button id="dark-toggle" aria-label="Toggle Light/Dark Mode">Light Mode</button>
+  </div>
+</div>
+<main>
+  <div class="hero-card" id="home">
+    <h1>Hi, I am Balakrishnan.S</h1>
+    <p>Crafting digital experiences with professionalism and creativity. 
+      Explore my work and background below!</p>
+    <button class="see-work-btn" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">See my work</button>
+  </div>
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I am Balakrishnan.S, currently pursuing a Bachelor of Computer Applications at A.M. Jain College.
+      I am passionate about software development and web technologies, committed to delivering professional and efficient solutions.
+      With a focus on continual learning and collaboration, I strive to contribute high-quality work that makes a measurable impact.
+    </p>
+  </section>
+  <section id="projects">
+    <h2>My Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="https://via.placeholder.com/280x60/222c34/18e1d9?text=Responsive+Portfolio+Project" alt="Responsive Portfolio Project" class="project-img" />
+        <div class="project-info">
+          <h3>Responsive Portfolio Website</h3>
+          <p>A modern responsive portfolio built with HTML, CSS, and JavaScript.</p>
+          <a href="#" class="project-link" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://via.placeholder.com/280x60/222c34/18e1d9?text=E-commerce+Platform+Project" alt="E-commerce Platform Project" class="project-img" />
+        <div class="project-info">
+          <h3>E-commerce Platform</h3>
+          <p>Full-stack e-commerce solution with shopping cart and payment integration.</p>
+          <a href="#" class="project-link" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://via.placeholder.com/280x60/222c34/18e1d9?text=Blog+Application+Project" alt="Blog Application Project" class="project-img" />
+        <div class="project-info">
+          <h3>Blog Application</h3>
+          <p>A customizable blogging platform with user authentication and rich editing.</p>
+          <a href="#" class="project-link" target="_blank" rel="noopener">View Project</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>If you want to get in touch, please fill out the form below:</p>
+    <form id="contact-form" novalidate>
+      <input type="text" id="name" name="name" placeholder="Your Name" required minlength="3" />
+      <input type="email" id="email" name="email" placeholder="Your Email" required />
+      <textarea id="message" name="message" rows="5" placeholder="Your Message" required minlength="10"></textarea>
+      <button type="submit" class="submit-btn" disabled>Send Message</button>
+    </form>
+  </section>
+</main>
+<!-- Click to Top Button -->
+<button id="to-top-btn" aria-label="Scroll to top">&#8679;</button>
+<script>
+  // Hamburger Menu functionality
+  const hamburger = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  // Close menu after clicking a link (for mobile usability)
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 700) {
+        navMenu.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded','false');
+      }
+    });
+  });
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+    hamburger.classList.toggle('active');
+    hamburger.setAttribute('aria-expanded', navMenu.classList.contains('open') ? 'true' : 'false');
+  });
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 700){
+      navMenu.classList.remove('open');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded','false');
+    }
+  });
+
+  // Light/Dark mode toggle
+  const darkToggle = document.getElementById('dark-toggle');
+  darkToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    if (document.body.classList.contains('light')) {
+      darkToggle.textContent = "Dark Mode";
+      localStorage.setItem('theme', 'light');
+    } else {
+      darkToggle.textContent = "Light Mode";
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+  // Load saved theme
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    darkToggle.textContent = "Dark Mode";
+  }
+  // Section scroll reveal animation
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.14 });
+  document.querySelectorAll('section, .hero-card').forEach(s => observer.observe(s));
+  // Contact form live validation
+  const form = document.getElementById('contact-form');
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const inputs = form.querySelectorAll('input, textarea');
+  function validate() {
+    const valid = Array.from(inputs).every(input => input.checkValidity());
+    submitBtn.disabled = !valid;
+  }
+  inputs.forEach(input => input.addEventListener('input', validate));
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    alert("Thank you for your message! I will get back to you soon.");
+    form.reset();
+    submitBtn.disabled = true;
+  });
+  // Click to Top button
+  const toTopBtn = document.getElementById('to-top-btn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) {
+      toTopBtn.style.display = 'block';
+    } else {
+      toTopBtn.style.display = 'none';
+    }
+  });
+  toTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
